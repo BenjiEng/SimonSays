@@ -1,13 +1,13 @@
 //Simon namespace
 var Simon = {
-	//public var
+	//public variables
 	sequence: [],
 	round: 0,
 	highscore: 0,
 	active: true,
 	pointer: 0,
 
-	//entry point
+	// entry point to initalize class
 	initSimon: function() {
 		var self = this;
 		$('#start').on('click', function() {
@@ -15,6 +15,7 @@ var Simon = {
 		});
 	},
 
+	// starts the game
 	startGame: function() {
 		this.sequence = [];
 		this.round = 0;
@@ -23,13 +24,14 @@ var Simon = {
 		this.newRound();
 	},
 
+	// handles new round
 	newRound: function() {
 		var self = this;
 
 		$('[data-round]').text(++self.round);
 
 		self.preventInput();
-		self.sequence.push(self.randomNumber());
+		self.sequence.push(self.generateNumber());
 		self.animate(self.sequence);
 		self.pointer = 0;
 		self.allowInput();
@@ -67,14 +69,14 @@ var Simon = {
 		$('[data-tile]').removeClass('hoverable');
 	},
 
-	//handles the click
+	// handles the click
 	handleClick: function(e) {
 		var self = this;
 		var clickValue = $(e.target).data('tile');
 		self.checkGame(clickValue);
 	},
 
-	//checks the value against the pointer
+	// checks the value against the pointer
 	checkGame(clickValue) {
 		var self = this;
 		//handle correct click;		
@@ -96,7 +98,7 @@ var Simon = {
 		}
 	},
 
-	//Animates the sequence
+	// Animates the sequence
 	animate: function(sequence) {
 		var self = this;
 		var i = 0;
@@ -110,7 +112,7 @@ var Simon = {
 		}, 800);
 	},
 
-	//Animates the button
+	// Animates the button
 	animateButton: function(tile) {
 		var $tile = $('[data-tile=' + tile + ']').addClass('lit');
 		window.setTimeout(function() {
@@ -118,8 +120,8 @@ var Simon = {
 		}, 400);
 	},
 
-	//Generates random number
-	randomNumber: function() {
+	// Generates random number
+	generateNumber: function() {
 		// between 1 and 4
 		return Math.floor((Math.random()*4)+1);
 	}
